@@ -1,4 +1,11 @@
 ---
+- name: install docker
+  hosts: all
+  become: yes
+  tasks:
+    - apt:
+        name: docker.io
+        state: present 
 - name: build java
   hosts: bld 
   become: yes
