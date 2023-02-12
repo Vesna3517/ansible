@@ -6,6 +6,8 @@
     - apt:
         name: docker.io
         state: present 
+        name: python-pip
+        state: present
     - pip:
         name: docker-py
 - name: build java
