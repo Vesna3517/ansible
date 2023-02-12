@@ -24,14 +24,20 @@
       docker_container:
         name: mvn
         image: maven:latest
-        command: ["cd /tmp/java", "mvn", "package"]
-- hosts: 34.22.242.195
+        command: ["mvn","-f /tmp/java/pom.xml", "package"]
+- name: copy file from bld to serv
+  hosts: bld
   tasks:
-    - name: Transfer file from bld to web
-      synchronize:
-        src: /tmp/java/target
+    - fetch:
+        src: /tmp/java/target/
+        dest: ./java/
+        flat: true
+- name: copy file from serv to web
+  hosts: web
+  tasks:
+    - copy:
+        src: ./java
         dest: /tmp/java
-      delegate_to: 34.79.234.14
 - name: web server
   hosts: web
   become: yes
