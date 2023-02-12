@@ -6,6 +6,7 @@
     - apt:
         name: docker.io
         state: present 
+    - apt:
         name: python-pip
         state: present
     - pip:
@@ -24,13 +25,13 @@
         name: mvn
         image: maven:latest
         command: ["cd /tmp/java", "mvn", "package"]
-- hosts: web
+- hosts: 34.22.242.195
   tasks:
     - name: Transfer file from bld to web
       synchronize:
         src: /tmp/java/target
         dest: /tmp/java
-      delegate_to: bld
+      delegate_to: 34.79.234.14
 - name: web server
   hosts: web
   become: yes
