@@ -1,0 +1,35 @@
+---
+- name: build java
+  hosts: bld 
+  become: yes
+  tasks: 
+    - name: clone from git
+      git:
+        repo: 'https://github.com/cherukuriPraveenchowdary/Sample-Java-War.git'
+        dest: /tmp/java
+        clone: yes
+    - name: Start a container with a command
+      docker_container:
+        name: mvn
+        image: maven:latest
+        command: ["cd /tmp/java", "mvn", "package"]
+- hosts: web
+  tasks:
+    - name: Transfer file from bld to web
+      synchronize:
+        src: /tmp/java/target
+        dest: /tmp/java
+      delegate_to: bld
+- name: web server
+  hosts: web
+  become: yes
+  tasks:
+    - name: Container present
+      docker_container:
+        name: tomcat 
+        state: present
+        image: tomcat:9
+        ports: "8080:8080"
+        volumes:
+        - /tmp/java:/usr/local/tomcat/webapps
+        
