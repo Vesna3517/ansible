@@ -12,6 +12,10 @@
     - pip:
         name: docker-py
         state: present
+- name: Creates directory
+  file:
+    path: /tmp/java
+    state: directory 
 - name: build java
   hosts: bld 
   become: yes
