@@ -57,6 +57,6 @@
         state: present
         image: tomcat:9
         ports: "8080:8080"
-        volumes:
-        - /tmp/java/target:/usr/local/tomcat/webapps
+        volumes: /tmp/java/target:/usr/local/tomcat/webapps
+        command: ["catalina.sh", "run"]
         
