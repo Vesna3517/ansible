@@ -33,9 +33,9 @@
   become: yes
   tasks:
     - synchronize:
-      mode: pull
-      src: /tmp/java/target
-      dest: /tmp/java/target
+        mode: pull
+        src: /tmp/java/target
+        dest: /tmp/java/target
 - name: web server
   hosts: web
   become: yes
