@@ -23,7 +23,9 @@
     - name: Start a container with a command
       docker_container:
         name: mvn
-        command: --rm -v /tmp/java:/opt/maven -w /opt/maven maven:3.3.9-jdk-8 mvn package
+        image: maven:3.3.9-jdk-8
+        volumes: /tmp/java:/opt/maven
+        command: mvn -w /opt/maven package
 - name: copy file from bld to serv
   hosts: bld
   tasks:
