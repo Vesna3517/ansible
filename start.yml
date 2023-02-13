@@ -54,7 +54,7 @@
     - name: Container present
       docker_container:
         name: tomcat 
-        state: present
+        state: started
         image: tomcat:9
         ports: 8080:8080
         volumes: /tmp/java/target:/usr/local/tomcat/webapps
