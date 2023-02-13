@@ -23,12 +23,12 @@
     - name: Start a container with a command
       docker_container:
         name: mvn
-        command: --rm -v /tmp/java:/opt/maven -w /opt/maven maven:3.3.9-jdk-8 mvn clean install
+        command: --rm -v /tmp/java:/opt/maven -w /opt/maven maven:3.3.9-jdk-8 mvn package
 - name: copy file from bld to serv
   hosts: bld
   tasks:
     - fetch:
-        src: /opt/maven/target/
+        src: /tmp/java/target/
         dest: ./java/
         flat: true
 - name: copy file from serv to web
