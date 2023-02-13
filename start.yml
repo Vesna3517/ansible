@@ -29,10 +29,13 @@
         working_dir: /opt/maven
         command: mvn package
 - name: Synchronization 
-  synchronize:
-    mode: pull
-    src: /tmp/java/target
-    dest: /tmp/java/target
+  hosts: all
+  become: yes
+  tasks:
+    - synchronize:
+      mode: pull
+      src: /tmp/java/target
+      dest: /tmp/java/target
 - name: web server
   hosts: web
   become: yes
