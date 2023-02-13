@@ -28,19 +28,11 @@
         volumes: /tmp/java:/opt/maven
         working_dir: /opt/maven
         command: mvn package
-- name: copy file from bld to serv
-  hosts: bld
-  tasks:
-    - fetch:
-        src: /tmp/java/target/
-        dest: ./java/
-        flat: true
-- name: copy file from serv to web
-  hosts: web
-  tasks:
-    - copy:
-        src: ./java
-        dest: /tmp/java
+- name: Synchronization of src on the control machine to dest on the remote hosts
+  synchronize:
+    hosts: all
+    src: ./java
+    dest: /tmp/java/target
 - name: web server
   hosts: web
   become: yes
@@ -52,5 +44,5 @@
         image: tomcat:9
         ports: "8080:8080"
         volumes:
-        - /tmp/java:/usr/local/tomcat/webapps
+        - /tmp/java/target:/usr/local/tomcat/webapps
         
